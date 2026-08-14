@@ -47,6 +47,7 @@
   align-items: center;
   border-bottom: var(--border-width) solid var(--color-border-subtle);
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-4);
   justify-content: space-between;
   padding: var(--space-5);
@@ -79,7 +80,7 @@
 .body {
   display: grid;
   gap: var(--space-4);
-  grid-template-columns: repeat(3, minmax(var(--space-0), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--space-98), 100%), 1fr));
   min-height: var(--space-118);
   padding: var(--space-6);
 }
@@ -205,11 +206,6 @@
 }
 
 @keyframes shine {
-  0% { background-position: var(--skeleton-shift-start) var(--space-0); }
-  100% { background-position: var(--skeleton-shift-end) var(--space-0); }
-}
-
-@media (max-width: 860px) {
-  .body { grid-template-columns: 1fr; }
-  .toolbar { align-items: flex-start; flex-direction: column; }
+  from { background-position: var(--skeleton-shift-start) var(--space-0); }
+  to { background-position: var(--skeleton-shift-end) var(--space-0); }
 }
