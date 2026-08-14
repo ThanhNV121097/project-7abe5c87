@@ -20,7 +20,7 @@ export type NotesErrorResponse = {
   };
 };
 
-const notesResponse: NotesResponse = {
+const response: NotesResponse = {
   notes: [
     {
       id: "0191bd30-427b-7bca-a802-59aa67320cb1",
@@ -47,5 +47,5 @@ const notesResponse: NotesResponse = {
 
 export async function getSavedNotes(): Promise<NotesResponse> {
   await new Promise((resolve) => setTimeout(resolve, 500));
-  return notesResponse;
+  return response;
 }
