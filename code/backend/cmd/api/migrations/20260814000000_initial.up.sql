@@ -1,0 +1,1 @@
+-- No product tables in scaffold. Story ERD owns notes schema.
