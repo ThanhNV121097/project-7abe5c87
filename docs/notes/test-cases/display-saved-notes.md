@@ -1,134 +1,81 @@
 # Test Cases — Display saved notes
 
-Risk level: low. Single read-only page, but covers load, empty, error, and display states named in SRS.
+Risk level: low. One read-only page, no mutation, no auth. Coverage stays exact to written acceptance criteria and required failure states.
 
-## Automated coverage
+## Automated cases
 
-### Scenario: Display note list when saved notes exist
-**Given** saved notes exist in database and fetch succeeds with note data
-**When** visitor opens “Note Board”
-**Then** page displays note list
+### Scenario: Display note list when notes exist
+**Given** saved notes exist in database and page opens on “Note Board”
+**When** visitor opens page and fetch resolves with notes
+**Then** page displays read-only note list
 
-### Scenario: Show note title in each rendered note
-**Given** saved notes exist in database and note list renders
-**When** visitor views list
-**Then** each note shows title
+Trace: AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-7, AC-8, AC-9
 
-### Scenario: Show note body or excerpt in each rendered note
-**Given** saved notes exist in database and note list renders
-**When** visitor views list
-**Then** each note shows body or excerpt
-
-### Scenario: Show updated date in required format
-**Given** saved notes exist in database and note list renders
-**When** visitor views list
-**Then** each note shows updated date as `Updated Mon DD, YYYY` with no time
-
-### Scenario: Expose no add control
-**Given** saved notes exist in database and page is visible
-**When** visitor views page
-**Then** page exposes no add control
-
-### Scenario: Expose no edit control
-**Given** saved notes exist in database and page is visible
-**When** visitor views page
-**Then** page exposes no edit control
-
-### Scenario: Expose no delete control
-**Given** saved notes exist in database and page is visible
-**When** visitor views page
-**Then** page exposes no delete control
-
-### Scenario: Expose no search control
-**Given** saved notes exist in database and page is visible
-**When** visitor views page
-**Then** page exposes no search control
-
-### Scenario: Expose no sign-in or account control
-**Given** saved notes exist in database and page is visible
-**When** visitor views page
-**Then** page exposes no sign-in or account control
-
-### Scenario: Show loading state while fetch is unresolved
+### Scenario: Show loading state while fetch unresolved
 **Given** notes fetch is unresolved
 **When** visitor opens “Note Board”
-**Then** page displays loading state
+**Then** page displays loading state until fetch resolves
 
-### Scenario: Replace loading state with note list after successful fetch
-**Given** notes fetch later succeeds with notes
+Trace: AC-10
+
+### Scenario: Replace loading with note list when fetch succeeds
+**Given** notes fetch is unresolved and later succeeds with notes
 **When** fetch resolves
-**Then** loading state is replaced by note list
+**Then** loading state disappears and note list is shown
 
-### Scenario: Replace loading state with empty state after successful empty fetch
-**Given** notes fetch later succeeds with zero notes
+Trace: AC-11
+
+### Scenario: Replace loading with empty state when fetch succeeds with zero notes
+**Given** notes fetch is unresolved and later succeeds with zero notes
 **When** fetch resolves
-**Then** loading state is replaced by empty state
+**Then** loading state disappears and empty state is shown
 
-### Scenario: Replace loading state with error state after fetch failure
-**Given** notes fetch later fails
-**When** fetch resolves
-**Then** loading state is replaced by error state
+Trace: AC-12, AC-14, AC-15, AC-16
 
-### Scenario: Show empty state when database has zero notes
-**Given** database contains zero notes and fetch succeeds
-**When** visitor opens “Note Board”
-**Then** page displays empty state
+### Scenario: Replace loading with error state when fetch fails
+**Given** notes fetch is unresolved and later fails
+**When** fetch resolves with failure
+**Then** loading state disappears and error state is shown
 
-### Scenario: Show no note cards in empty state
-**Given** database contains zero notes and empty state renders
-**When** visitor views empty state
-**Then** page displays no note cards
+Trace: AC-13, AC-17, AC-18, AC-19
 
-### Scenario: Expose no create-note action in empty state
-**Given** database contains zero notes and empty state renders
-**When** visitor views empty state
-**Then** page exposes no create-note action
-
-### Scenario: Show error state when notes fetch fails
-**Given** notes fetch fails
-**When** visitor opens “Note Board”
-**Then** page displays error state
-
-### Scenario: Hide internal error details in error state
-**Given** notes fetch fails and error state renders
-**When** visitor views error state
-**Then** page does not expose internal error details
-
-### Scenario: Show retry action in error state
-**Given** notes fetch fails and error state renders
-**When** visitor views error state
-**Then** page displays retry action
-
-### Scenario: Retry fetch when visitor activates retry
-**Given** error state is visible
-**When** visitor activates retry
-**Then** page attempts to fetch notes again
-
-### Scenario: Show note list after retry succeeds with notes
+### Scenario: Retry after error succeeds with notes
 **Given** error state is visible and retry succeeds with notes
-**When** fetch resolves
-**Then** page displays note list
+**When** visitor activates retry
+**Then** page attempts fetch again and shows note list after success
 
-### Scenario: Show empty state after retry succeeds with zero notes
+Trace: AC-20, AC-21
+
+### Scenario: Retry after error succeeds with zero notes
 **Given** error state is visible and retry succeeds with zero notes
-**When** fetch resolves
-**Then** page displays empty state
+**When** visitor activates retry
+**Then** page attempts fetch again and shows empty state after success
 
-### Scenario: Keep error state available after retry fails
+Trace: AC-20, AC-22
+
+### Scenario: Retry after error fails again
 **Given** error state is visible and retry fails
-**When** fetch resolves
+**When** visitor activates retry
 **Then** page keeps error state available
 
-## Manual coverage
+Trace: AC-20, AC-23
 
-### Scenario: Loading state stays visible until fetch resolves
-**Given** notes fetch remains unresolved
-**When** visitor keeps page open
-**Then** loading state remains visible until success or failure
-**Reason** timing and persistence need browser observation.
+## Manual cases
 
-### Scenario: Page shows only read-only visitor access
-**Given** visitor opens “Note Board”
-**When** page loads
-**Then** visitor can view read-only list and no account prompt appears
-**Reason** no auth UI may exist; this is visible end-user behavior.
+### Scenario: Error state hides internal failure details
+**Given** notes fetch fails
+**When** error state renders
+**Then** page shows safe error copy and no internal error details
+
+Reason manual: exact message text and absence of backend detail need visual review against design and network error source.
+
+Trace: AC-18
+
+### Scenario: Page exposes no note-management or auth controls
+**Given** saved notes exist and page is visible
+**When** visitor scans page
+**Then** page shows no add, edit, delete, search, sign-in, or account controls
+
+Reason manual: absence of controls is a UI audit against final rendered page and design.
+
+Trace: AC-5, AC-6, AC-7, AC-8, AC-9
