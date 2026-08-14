@@ -50,7 +50,7 @@ function CenterState({ state, onRetry }: { state: "empty" | "error"; onRetry?: (
       <div className={isError ? styles.errorIcon : styles.emptyIcon} aria-hidden="true">
         {isError ? "!" : "–"}
       </div>
-      <h3>{isError ? "Notes could not load" : "No saved notes yet"}</h3>
+      <h2>{isError ? "Notes could not load" : "No saved notes yet"}</h2>
       <p>
         {isError
           ? "Try again. Internal error details stay hidden."
@@ -85,20 +85,27 @@ export default function DisplaySavedNotes() {
   }, []);
 
   return (
-    <section className={styles.board} aria-label="Note Board application screen">
-      <header className={styles.toolbar}>
-        <div>
-          <p>Read-only database list</p>
-          <h2>Note Board</h2>
-        </div>
-        <span aria-label="Read-only database list">Read-only</span>
-      </header>
-      <div className={styles.body}>
-        {state === "loading" ? <SkeletonList /> : null}
-        {state === "loaded" ? notes.map((note) => <NoteCard key={note.id} note={note} />) : null}
-        {state === "empty" ? <CenterState state="empty" /> : null}
-        {state === "error" ? <CenterState state="error" onRetry={loadNotes} /> : null}
+    <section className={styles.screen} aria-labelledby="note-board-title">
+      <div className={styles.intro}>
+        <p>Read-only saved notes</p>
+        <h1 id="note-board-title">Note Board</h1>
+        <span aria-label="Read-only database list">Read-only database list</span>
       </div>
+      <section className={styles.board} aria-label="Note Board application screen">
+        <header className={styles.toolbar}>
+          <div>
+            <p>Saved notes</p>
+            <h2>Database notes</h2>
+          </div>
+          <span>{state === "loaded" ? `${notes.length} notes` : "Read-only"}</span>
+        </header>
+        <div className={styles.body}>
+          {state === "loading" ? <SkeletonList /> : null}
+          {state === "loaded" ? notes.map((note) => <NoteCard key={note.id} note={note} />) : null}
+          {state === "empty" ? <CenterState state="empty" /> : null}
+          {state === "error" ? <CenterState state="error" onRetry={loadNotes} /> : null}
+        </div>
+      </section>
     </section>
   );
 }
