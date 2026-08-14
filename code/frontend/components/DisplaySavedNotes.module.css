@@ -1,0 +1,179 @@
+.board {
+  background: var(--color-surface-glass-86);
+  border: var(--border-width) solid var(--color-border-glass-90);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-panel);
+  color: var(--color-text);
+  overflow: hidden;
+}
+
+.toolbar {
+  align-items: center;
+  border-bottom: var(--border-width) solid var(--color-border-subtle);
+  display: flex;
+  gap: var(--space-4);
+  justify-content: space-between;
+  padding: var(--space-5);
+}
+
+.toolbar p {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  margin: var(--space-0);
+}
+
+.toolbar h2 {
+  font-size: var(--text-2xl);
+  line-height: 1.5;
+  margin: var(--space-1) var(--space-0) var(--space-0);
+}
+
+.toolbar span {
+  background: var(--color-success-soft);
+  border: var(--border-width) solid var(--color-success-border);
+  border-radius: var(--radius-full);
+  color: var(--color-success-text);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  padding: var(--space-2) var(--space-3);
+  white-space: nowrap;
+}
+
+.body {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  min-height: var(--space-118);
+  padding: var(--space-6);
+}
+
+.noteCard {
+  background: var(--color-surface);
+  border: var(--border-width) dashed var(--color-border-dashed);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-note);
+  padding: var(--space-5);
+}
+
+.noteCard h3 {
+  font-size: var(--text-note-title);
+  margin: var(--space-0) var(--space-0) var(--space-3);
+  overflow-wrap: anywhere;
+}
+
+.noteCard p {
+  color: var(--color-text-soft);
+  font-size: var(--text-base);
+  margin: var(--space-0) var(--space-0) var(--space-4);
+  overflow-wrap: anywhere;
+}
+
+.noteCard span {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm-tight);
+  font-weight: 700;
+}
+
+.skeletonList {
+  display: contents;
+}
+
+.skeletonCard {
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border-subtle);
+  border-radius: var(--radius-card);
+  padding: var(--space-5);
+}
+
+.skeletonCard span {
+  animation: shine var(--duration-shine) var(--easing) infinite;
+  background: linear-gradient(90deg, var(--color-border-subtle), var(--color-primary-wash-08), var(--color-border-subtle));
+  border-radius: var(--radius-full);
+  display: block;
+  height: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.skeletonCard span:nth-child(1) { width: 70%; }
+.skeletonCard span:nth-child(2) { width: 100%; }
+.skeletonCard span:nth-child(3) { width: 45%; margin-bottom: var(--space-0); }
+
+.centerState {
+  align-items: center;
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border-subtle);
+  border-radius: var(--radius-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  grid-column: 1 / -1;
+  justify-content: center;
+  min-height: var(--space-98);
+  padding: var(--space-7);
+  text-align: center;
+}
+
+.emptyIcon,
+.errorIcon {
+  align-items: center;
+  border-radius: var(--radius-full);
+  display: flex;
+  font-size: var(--text-xl);
+  font-weight: 800;
+  height: var(--space-12);
+  justify-content: center;
+  width: var(--space-12);
+}
+
+.emptyIcon {
+  background: var(--color-primary-soft);
+  color: var(--color-text-soft);
+}
+
+.errorIcon {
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.centerState h3 {
+  font-size: var(--text-xl);
+  margin: var(--space-0);
+}
+
+.centerState p {
+  color: var(--color-text-muted);
+  font-size: var(--text-base);
+  margin: var(--space-0);
+  max-width: 48ch;
+}
+
+.retryButton {
+  background: var(--color-primary);
+  border: var(--border-width) solid var(--color-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-primary);
+  color: var(--color-primary-text);
+  cursor: pointer;
+  font-size: var(--text-base);
+  font-weight: 800;
+  margin-top: var(--space-2);
+  min-height: var(--space-11);
+  padding: var(--space-3) var(--space-5);
+  transition: background var(--duration-base) var(--easing), transform var(--duration-base) var(--easing);
+}
+
+.retryButton:hover {
+  background: var(--color-primary-hover);
+  transform: translateY(calc(var(--space-1) * -1));
+}
+
+@keyframes shine {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@media (max-width: 860px) {
+  .body { grid-template-columns: 1fr; }
+  .toolbar { align-items: flex-start; flex-direction: column; }
+}
