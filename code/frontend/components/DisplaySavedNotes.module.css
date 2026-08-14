@@ -1,3 +1,39 @@
+.screen {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.intro {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 720px;
+}
+
+.intro p {
+  color: var(--color-primary);
+  font-size: var(--text-sm-tight);
+  font-weight: 800;
+  margin: var(--space-0);
+}
+
+.intro h1 {
+  color: var(--color-text);
+  font-size: var(--text-3xl);
+  line-height: .95;
+  margin: var(--space-0);
+}
+
+.intro span {
+  background: var(--color-success-soft);
+  border: var(--border-width) solid var(--color-success-border);
+  border-radius: var(--radius-full);
+  color: var(--color-success-text);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  padding: var(--space-2) var(--space-3);
+  width: fit-content;
+}
+
 .board {
   background: var(--color-surface-glass-86);
   border: var(--border-width) solid var(--color-border-glass-90);
@@ -136,7 +172,7 @@
   color: var(--color-danger);
 }
 
-.centerState h3 {
+.centerState h2 {
   font-size: var(--text-xl);
   margin: var(--space-0);
 }
